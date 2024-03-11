@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Events.Commands.Create
+namespace Application.Features.Events.Queries.GetList
 {
-    public class CreatedEventResponse
+    public class GetListEventListItemDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public DateTime CreatedDate { get; set; }
     }
 }
