@@ -17,11 +17,20 @@ namespace Domain.Entities
         public DateTime EndDate { get; set; }
         public string Location { get; set; }
         public int Capacity { get; set; }
-        public int CategoryId { get; set; }
-        public int? SpeakerId { get; set; }
-        public int? RoomId { get; set; }
+        public Guid CategoryId { get; set; }
+        public Guid? SpeakerId { get; set; }
+        public Guid? RoomId { get; set; }
         public string Website { get; set; }
         public string EventType { get; set; }
 
+        public virtual Category? Category { get; set; }
+        public virtual Speaker? Speaker { get; set; }
+        public virtual Room? Room { get; set; }
+        public virtual ICollection<EventAttendee>? EventAttendees { get; set; }
+
+        public Event()
+        {
+            EventAttendees = new HashSet<EventAttendee>();
+        }
     }
 }

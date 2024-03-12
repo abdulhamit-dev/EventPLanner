@@ -13,14 +13,20 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Event> builder)
         {
-            builder.ToTable("Events").HasKey(e=>e.Id);
-            builder.Property(e => e.Id).HasColumnName("Id").IsRequired();
-            builder.Property(e => e.Name).HasColumnName("Name").IsRequired();
-            builder.Property(e => e.CreatedDate).HasColumnName("CreatedDate").IsRequired();
-            builder.Property(e => e.UpdatedDate).HasColumnName("UpdatedDate");
+            builder.ToTable("Events").HasKey(b=>b.Id);
+            builder.Property(b => b.Id).HasColumnName("Id").IsRequired();
+            builder.Property(b => b.Name).HasColumnName("Name").IsRequired();
+            builder.Property(b => b.CreatedDate).HasColumnName("CreatedDate").IsRequired();
+            builder.Property(b => b.UpdatedDate).HasColumnName("UpdatedDate");
 
+            builder.HasIndex(indexExpression:b=>b.Name,name:"UK_Event_Name").IsUnique();
 
-            builder.HasQueryFilter(e => !e.DeletedDate.HasValue);
+            builder.HasMany(b => b.EventAttendees);
+            builder.HasOne(b => b.Category);
+            builder.HasOne(b=>b.Speaker);
+            builder.HasOne(b=>b.Room);
+
+            builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
         }
     }
 }

@@ -9,10 +9,12 @@ namespace Domain.Entities
 {
     public class Payment: Entity<Guid>
     {
-        public int RegistrationId { get; set; }
+        public int EventId { get; set; }
         public decimal Amount { get; set; }
         public string PaymentMethod { get; set; }
         public string PaymentStatus { get; set; }
         public DateTime PaymentDate { get; set; }
+
+        public virtual Event? Event { get; set; }
     }
 }
