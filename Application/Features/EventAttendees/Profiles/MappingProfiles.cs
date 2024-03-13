@@ -24,6 +24,7 @@ namespace Application.Features.EventAttendees.Profiles
         {
             CreateMap<EventAttendee, GetListEventAttendeeListItemDto>()
                 .ForMember(destinationMember:e=>e.EventName,memberOptions:opt=>opt.MapFrom(e=>e.Event.Name)).ReverseMap();
+            CreateMap<EventAttendee, GetListByDynamicEventAttendeeListItemDto>().ReverseMap();
             CreateMap<Paginate<EventAttendee>, GetListResponse<GetListEventAttendeeListItemDto>>().ReverseMap();
             CreateMap<Paginate<EventAttendee>, GetListResponse<GetListByDynamicEventAttendeeListItemDto>>().ReverseMap();
         }
