@@ -14,6 +14,7 @@ namespace Persistence
             //service.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("EventPlannerDb"));
             service.AddDbContext<BaseDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("EventPlannerCon")));
             service.AddScoped<IEventRepository, EventRepository>();
+            service.AddScoped<IEventAttendeeRepository, EventAttendeeRepository>();
             return service;
         }
     }

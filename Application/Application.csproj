@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Features\EventAttendees\Commands\" />
+    <Folder Include="Features\EventAttendees\Constants\" />
+    <Folder Include="Features\EventAttendees\Rules\" />
     <Folder Include="Features\Events\Constants\" />
     <Folder Include="Features\Events\Rules\" />
   </ItemGroup>

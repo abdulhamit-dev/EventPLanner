@@ -22,9 +22,9 @@ namespace Persistence.EntityConfigurations
             builder.HasIndex(indexExpression:b=>b.Name,name:"UK_Event_Name").IsUnique();
 
             builder.HasMany(b => b.EventAttendees);
-            builder.HasOne(b => b.Category);
-            builder.HasOne(b=>b.Speaker);
-            builder.HasOne(b=>b.Room);
+            //builder.HasOne(b => b.Category);
+            //builder.HasOne(b=>b.Speaker);
+            //builder.HasOne(b=>b.Room);
 
             builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
         }

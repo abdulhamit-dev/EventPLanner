@@ -23,9 +23,9 @@ namespace Domain.Entities
         public string Website { get; set; }
         public string EventType { get; set; }
 
-        public virtual Category? Category { get; set; }
-        public virtual Speaker? Speaker { get; set; }
-        public virtual Room? Room { get; set; }
+        //public virtual Category? Category { get; set; }
+        //public virtual Speaker? Speaker { get; set; }
+        //public virtual Room? Room { get; set; }
         public virtual ICollection<EventAttendee>? EventAttendees { get; set; }
 
         public Event()
