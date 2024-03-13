@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.EventAttendees.Queries.GetList
 {
-    public class GetListEventAttendeesListItemDto
+    public class GetListEventAttendeeListItemDto
     {
         public string EventName { get; set; }
         public string AttendeeName { get; set; }

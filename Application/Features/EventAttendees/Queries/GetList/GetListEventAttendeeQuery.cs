@@ -15,10 +15,10 @@ using System.Threading.Tasks;
 
 namespace Application.Features.EventAttendees.Queries.GetList
 {
-    public class GetListEventAttendeeQuery : IRequest<GetListResponse<GetListEventAttendeesListItemDto>>
+    public class GetListEventAttendeeQuery : IRequest<GetListResponse<GetListEventAttendeeListItemDto>>
     {
         public PageRequest PageRequest { get; set; }
-        public class GetListEventQueryHandler : IRequestHandler<GetListEventAttendeeQuery, GetListResponse<GetListEventAttendeesListItemDto>>
+        public class GetListEventQueryHandler : IRequestHandler<GetListEventAttendeeQuery, GetListResponse<GetListEventAttendeeListItemDto>>
         {
             private readonly IEventAttendeeRepository _eventAttendeeRepository;
             private readonly IMapper _mapper;
@@ -29,7 +29,7 @@ namespace Application.Features.EventAttendees.Queries.GetList
                 _mapper = mapper;
             }
 
-            public async Task<GetListResponse<GetListEventAttendeesListItemDto>> Handle(GetListEventAttendeeQuery request, CancellationToken cancellationToken)
+            public async Task<GetListResponse<GetListEventAttendeeListItemDto>> Handle(GetListEventAttendeeQuery request, CancellationToken cancellationToken)
             {
                 Paginate<EventAttendee> eventAttedees = await _eventAttendeeRepository.GetListAsync(
                      include: e => e.Include(e => e.Event),
@@ -37,7 +37,7 @@ namespace Application.Features.EventAttendees.Queries.GetList
                      size: request.PageRequest.PageSize
                      );
 
-                var response=_mapper.Map<GetListResponse<GetListEventAttendeesListItemDto>>(eventAttedees);
+                var response=_mapper.Map<GetListResponse<GetListEventAttendeeListItemDto>>(eventAttedees);
 
                 return response;
             }
