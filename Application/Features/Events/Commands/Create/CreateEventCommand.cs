@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Events.Rules;
+using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -22,18 +23,20 @@ namespace Application.Features.Events.Commands.Create
         {
             private IEventRepository _eventRepository;
             private readonly IMapper _mapper;
+            private readonly EventBusinessRules _eventBusinessRules;
 
 
-            public CreateEventCommandHandler(IEventRepository eventRepository, IMapper mapper)
+            public CreateEventCommandHandler(IEventRepository eventRepository, IMapper mapper, EventBusinessRules eventBusinessRules)
             {
                 _eventRepository = eventRepository;
                 _mapper = mapper;
+                _eventBusinessRules = eventBusinessRules;
             }
 
             public async Task<CreatedEventResponse> Handle(CreateEventCommand request, CancellationToken cancellationToken)
             {
+                await _eventBusinessRules.EventNameCannotBeDuplicatedWhenInserted(request.Name);
                 
-
                 Event @event = _mapper.Map<Event>(request);
                 @event.Id=Guid.NewGuid();
 
