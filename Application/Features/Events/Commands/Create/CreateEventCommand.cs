@@ -1,6 +1,7 @@
 ﻿using Application.Features.Events.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Transaction;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Events.Commands.Create
 {
-    public class CreateEventCommand:IRequest<CreatedEventResponse>
+    public class CreateEventCommand:IRequest<CreatedEventResponse>,ITransactionRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -40,9 +41,10 @@ namespace Application.Features.Events.Commands.Create
                 Event @event = _mapper.Map<Event>(request);
                 @event.Id=Guid.NewGuid();
 
-                var result=await _eventRepository.AddAsync(@event);
+                await _eventRepository.AddAsync(@event);
 
-                CreatedEventResponse response =_mapper.Map<CreatedEventResponse>(result);
+
+                CreatedEventResponse response =_mapper.Map<CreatedEventResponse>(@event);
 
                 return response;
               
