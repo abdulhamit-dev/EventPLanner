@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Events.Commands.Update
 {
-    public class UpdateEventCommand : IRequest<UpdatedEventResponse>
+    public class UpdateEventCommand : IRequest<UpdatedEventResponse>,ICacheRemoverRequest
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -18,6 +19,10 @@ namespace Application.Features.Events.Commands.Update
         public string Website { get; set; }
         public string EventType { get; set; }
         public string Location { get; set; }
+
+        public string? CacheKey => "";
+        public bool BypassCache => false;
+        public string? CacheGroupKey => "getEvents";
 
         public class UpdateEventCommandHandler : IRequestHandler<UpdateEventCommand, UpdatedEventResponse>
         {

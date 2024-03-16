@@ -11,6 +11,7 @@ namespace Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection service,IConfiguration configuration)
         {
+            
             //service.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("EventPlannerDb"));
             service.AddDbContext<BaseDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("EventPlannerCon")));
             service.AddScoped<IEventRepository, EventRepository>();

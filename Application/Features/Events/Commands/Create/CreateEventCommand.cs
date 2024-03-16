@@ -1,6 +1,7 @@
 ﻿using Application.Features.Events.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Core.Application.Pipelines.Transaction;
 using Domain.Entities;
 using MediatR;
@@ -12,13 +13,17 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Events.Commands.Create
 {
-    public class CreateEventCommand:IRequest<CreatedEventResponse>,ITransactionRequest
+    public class CreateEventCommand:IRequest<CreatedEventResponse>,ITransactionRequest,ICacheRemoverRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public string Website { get; set; }
         public string EventType { get; set; }
         public string Location { get; set; }
+
+        public string? CacheKey => "";
+        public bool BypassCache => false;
+        public string? CacheGroupKey => "getEvents";
 
         public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, CreatedEventResponse>
         {

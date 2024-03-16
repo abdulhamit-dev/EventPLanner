@@ -1,6 +1,7 @@
 ﻿using Application.Features.Events.Commands.Update;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -11,9 +12,14 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Events.Commands.Delete
 {
-    public class DeleteEventCommand:IRequest<DeletedEventResponse>
+    public class DeleteEventCommand:IRequest<DeletedEventResponse>, ICacheRemoverRequest
     {
         public Guid Id { get; set; }
+
+        public string? CacheKey => "";
+        public bool BypassCache => false;
+        public string? CacheGroupKey => "getEvents";
+
         public class DeleteEventCommandHandler : IRequestHandler<DeleteEventCommand, DeletedEventResponse>
         {
             private readonly IMapper _mapper;
