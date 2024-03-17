@@ -2,6 +2,7 @@
 using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Caching;
+using Core.Application.Pipelines.Logging;
 using Core.Application.Pipelines.Transaction;
 using Domain.Entities;
 using MediatR;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Events.Commands.Create
 {
-    public class CreateEventCommand:IRequest<CreatedEventResponse>,ITransactionRequest,ICacheRemoverRequest
+    public class CreateEventCommand:IRequest<CreatedEventResponse>,ITransactionRequest,ICacheRemoverRequest,ILoggableRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -41,6 +42,7 @@ namespace Application.Features.Events.Commands.Create
 
             public async Task<CreatedEventResponse> Handle(CreateEventCommand request, CancellationToken cancellationToken)
             {
+              
                 await _eventBusinessRules.EventNameCannotBeDuplicatedWhenInserted(request.Name);
                 
                 Event @event = _mapper.Map<Event>(request);
